@@ -1,5 +1,5 @@
 .data
-list: .byte 5 3 10 7 4
+list: .byte 5 -3 210 7 4
 str: .ASCIIZ"The biggest number : " 
 .text
 la $a0 list
