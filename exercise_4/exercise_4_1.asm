@@ -82,6 +82,7 @@ addi $sp $sp -8
 sw $ra 0($sp)
 sw $t0 4($sp)
 
+beqz $a1 zero
 addi $t0 $a1 -1
 move $a1 $a0
 move $v0 $a0
@@ -92,6 +93,9 @@ jal AddF
 addi $t0 $t0 -1
 move $a1 $v0
 j loop
+
+zero:
+li $v0 0
 
 endMultF:
 lw $t0 4($sp)
