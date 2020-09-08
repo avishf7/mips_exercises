@@ -2,6 +2,7 @@
 str1: .ASCIIZ"\nEnter value :"
 str2: .ASCIIZ"Enter op code :"
 str3: .ASCIIZ"The result is :"
+strE: .ASCIIZ"ERROR"
 .text
 li $t0 '+'
 li $t1 '*'
@@ -59,6 +60,7 @@ jal PowF
 j next
 
 case0: 
+beqz $t0 ERROR
 li $v0 1
 
 next:
@@ -69,6 +71,13 @@ syscall
 move $a0 $t0
 li $v0 1 
 syscall
+j end
+
+ERROR:
+la $a0 strE
+li $v0 4
+syscall
+
 j end
 
 #functions
