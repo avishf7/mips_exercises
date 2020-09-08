@@ -1,5 +1,5 @@
 .data
-list:  5 3 10 7 4
+list:  5 3 7 40 9
 str: .ASCIIZ"Sorted list: " 
 blank: .ASCIIZ" " 
 .text
