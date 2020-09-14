@@ -1,5 +1,5 @@
 .data 
-list: .byte 4 8 9 6 3 2 7 4 5 8 2 1 6 9 8 7 5 1 2 6 4 5 9 8 7 5 3 2 1 4 8 7
+list: .byte 4 8 9 6 3 2 7 4 5 8 2 1 6 9 8 7 5 1 2 6 4 5 9 8 7 5 3 2 1 4 8 9
 basicCode: .byte 0 0 0 0 0 0
 str: .ASCIIZ"Enter 6 digits:\n"
 str1: .ASCIIZ"the basic code "
@@ -73,8 +73,11 @@ j endProgram
 #return:
 # v0 - 0 if not found 1 if found
 find:
-addi $sp $sp -4
+#push to stack
+addi $sp $sp -12
 sw $ra 0($sp)
+sw $t0 4($sp)
+sw $t2 8($sp)
 
 lb $t2 0($a0)
 loop:
@@ -95,16 +98,24 @@ j loop
 Zero:li $v0 0
 
 end: 
+#pop from stack
+lw $t2 8($sp)
+lw $t0 4($sp)
 lw $ra 0($sp)
-addi $sp $sp 4
+addi $sp $sp 12
+
 jr $ra
 
+#find sequence of numbers in the basic code from the first element that already found
 findBasicCode:
-addi $sp $sp -16
+#push to stack
+addi $sp $sp -24
 sw $ra 0($sp)
 sw $a0 4($sp)
 sw $a1 8($sp)
 sw $a3 12($sp)
+sw $t0 16($sp)
+sw $t1 20($sp)
 
 labal:
 addi $a3 $a3 -1
@@ -124,11 +135,14 @@ notFound:
 li $v0 0
 
 endfindBasicCode:
+#pop from stack
+sw $t1 20($sp)
+sw $t0 16($sp)
 lw $a3 12($sp)
 lw $a1 8($sp)
 lw $a0 4($sp)
 lw $ra 0($sp)
-addi $sp $sp 16
+addi $sp $sp 24
 
 jr $ra
 
